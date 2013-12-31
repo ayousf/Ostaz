@@ -1,5 +1,6 @@
 OstazIii::Application.routes.draw do
   
+  root 'transactions#index'
   resources :transactions
   resources :accounts
   resources :account_types
