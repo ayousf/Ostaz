@@ -1,6 +1,7 @@
 class TransactionValidator < ActiveModel::Validator
   def validate(record)
     @accounts = Account.all
+    
     @accounttypes = AccountType.all
     @sumassets = 0.0
     @sumequity = 0.0
@@ -11,41 +12,87 @@ class TransactionValidator < ActiveModel::Validator
     @accounts.each do |account|
       case account.accounttype
       when "Asset"
-        @sumassets = account.amount.to_f + @sumassets
+        @sumassets = account.amount + @sumassets
       when "Equity"
-        @sumequity = account.amount.to_f + @sumequity
+        @sumequity = account.amount + @sumequity
       when "Liability"
-        @sumliability = account.amount.to_f + @sumliability
+        @sumliability = account.amount + @sumliability
       when "Expense"
-        @sumexpense = account.amount.to_f + @sumexpense
+        @sumexpense = account.amount + @sumexpense
       end
     end
     # calculating the SUMs based on the information in the record
     @accounts.each do |account|
+      
+      
       if account.name == record.from
-        case account.accounttype
-        when "Assets"
-          @sumassets = @sumassets - record.amount.to_f
-        when "Equity"
-          @sumequity = @sumequity - record.amount.to_f
-        when "Liability"
-          record.errors[:base] = "The FROM record can't be of type LIABILITY"
-        when "Expense"
-          record.errors[:base] = "The FROM record can't be of type EXPENSE"
-        end
-        elsif account.name == record.to
+          
+              case account.accounttype
+              when "Asset"
+                if account.amount > 0 && account.amount >= record.amount
+                  
+                  @sumassets = @sumassets - record.amount
+                  
+                  account.amount = account.amount - record.amount
+                  
+                  account.save
+                  break
+                else
+                  
+                  record.errors[:from] << "#{record.from} doesn't have enough money to complete this transaction"
+                  break
+                end
+              when "Equity"
+                if account.amount > 0 && account.amount >= record.amount
+                  @sumequity = @sumequity - record.amount
+                  account.amount = account.amount - record.amount
+                  account.save
+                else
+                  record.errors[:from] << "#{record.from} doesn't have enough money to complete this transaction"
+                end
+              when "Liability"
+                if account.amount > 0 && account.amount >= record.amount
+                  @sumliability = @sumliability - record.amount
+                  account.amount = account.amount - record.amount
+                  account.save
+                else
+                  record.errors[:from] << "#{record.from} doesn't have enough money to complete this transaction"
+                end
+              when "Expense"
+                record.errors[:from] << "The FROM record can't be of type EXPENSE"
+              end
+          
+          
+        elsif account.name == record.to && account.name != record.from
+          puts "***********************************************"
+          puts "entered the second part of the if condition"
           case account.accounttype
           when "Assets"
-            @sumassets = @sumassets + record.amount.to_f
+            @sumassets = @sumassets + record.amount
+            account.amount = account.amount + record.amount
+            account.save
+            break
           when "Equity"
-            @sumequity = @sumequity + record.amount.to_f
+            @sumequity = @sumequity + record.amount
+            account.amount = account.amount + record.amount
+            account.save
+            break
           when "Liability"
-            @sumliability = @sumliability + record.amount.to_f
+            @sumliability = @sumliability + record.amount
+            account.amount = account.amount + record.amount
+            account.save
+            break
           when "Expense"
-            @sumexpense = @sumexpense + record.amount.to_f
+            @sumexpense = @sumexpense + record.amount
+            account.amount = account.amount + record.amount
+            account.save
+            break
           end
+        
+        
       end
     end
+    #@accounts.save
     
     #Applying the formula to check it transaction is valid or not
     if @sumassets - @sumliability - @sumequity + @sumexpense != 0.0

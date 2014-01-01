@@ -12,11 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :from %><%= f.select :from, @account.map{|x| x.name} %><br>
+    <%= f.label :from %><%= f.select :from, @accounts.map{|x| x.name} %><br>
     
   </div>
   <div class="field">
-    <%= f.label :to %><%= f.select :to, @account.map{|x| x.name} %><br>
+    <%= f.label :to %><%= f.select :to, @accounts.map{|x| x.name} %><br>
     
   </div>
   <div class="field">
