@@ -12,18 +12,19 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :from %><br>
-    <%= f.text_field :from %>
+    <%= f.label :from %><%= f.select :from, @account.map{|x| x.name} %><br>
+    
   </div>
   <div class="field">
-    <%= f.label :to %><br>
-    <%= f.text_field :to %>
+    <%= f.label :to %><%= f.select :to, @account.map{|x| x.name} %><br>
+    
   </div>
   <div class="field">
     <%= f.label :amount %><br>
     <%= f.text_field :amount %>
   </div>
   <div class="actions">
+  	
     <%= f.submit %>
   </div>
 <% end %>
