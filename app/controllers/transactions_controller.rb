@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: [:show, :edit, :update, :destroy]
+  #before_action :set_transaction, only: [:show, :edit, :update, :destroy]
 
   # GET /transactions
   # GET /transactions.json
@@ -27,9 +27,8 @@ class TransactionsController < ApplicationController
   def create
     @account = Account.all
     @transaction = Transaction.new(transaction_params)
-
     respond_to do |format|
-      if @transaction.valid?
+      if @transaction.valid? && @transaction.errors.empty? == false
         @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
         format.json { render action: 'show', status: :created, location: @transaction }

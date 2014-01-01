@@ -1,5 +1,5 @@
 <%= form_for(@transaction) do |f| %>
-  <% if @transaction.errors.any? %>
+  <% if @transaction.errors.empty? == false%>
     <div id="error_explanation">
       <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
 
