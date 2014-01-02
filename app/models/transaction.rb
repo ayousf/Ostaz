@@ -81,7 +81,7 @@ class TransactionValidator < ActiveModel::Validator
         end
       end
     end
-    #@accounts.save
+    
     #Applying the formula to check it transaction is valid or not
     puts "************************************************"
     puts "just before the last if statement"
@@ -94,13 +94,22 @@ class TransactionValidator < ActiveModel::Validator
     if @sumassets - @sumliability - @sumequity + @sumexpense != 0.0
       record.errors.add(:base, "This is not a valid transaction")
     #record.errors = "This is not a valid transaction"
+    else
+     @accounts.each do |account|
+       if account.name == record.from
+         account.amount = account.amount - record.amount
+         account.save
+       elsif account.name == record.to
+         account.amount = account.amount + record.amount
+         account.save
+       end
+     end
     end
   end
 end
 
 class Transaction < ActiveRecord::Base
   include ActiveModel::Validations
-  #include ActiveModel::Errors
   has_and_belongs_to_many :accounts
   validates :from, :to, :amount, presence: true
   validates_with TransactionValidator

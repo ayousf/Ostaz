@@ -1,5 +1,6 @@
 <%= form_for(@transaction) do |f| %>
   <% if @transaction.errors.empty? == false%>
+  <% puts "WE HAVE ENTERED INTO THE TRUE CASE OF HTTP ERROR" %>
     <div id="error_explanation">
       <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
 

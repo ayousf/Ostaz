@@ -10,6 +10,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/1
   # GET /transactions/1.json
   def show
+    @transaction = Transaction.find(params[:id])
   end
 
   # GET /transactions/new
@@ -29,9 +30,8 @@ class TransactionsController < ApplicationController
     @accounts = Account.all
     @transaction = Transaction.new(transaction_params)
     respond_to do |format|
-      if @transaction.valid? && @transaction.errors.empty? == false
+      if @transaction.valid? #&& @transaction.errors.empty? == false
         @transaction.save
-        
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
         format.json { render action: 'show', status: :created, location: @transaction }
       else
