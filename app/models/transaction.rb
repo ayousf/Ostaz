@@ -22,13 +22,7 @@ class TransactionValidator < ActiveModel::Validator
     end
     # calculating the SUMs based on the information in the record
     @accounts.each do |account|
-      puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-      puts "started an iteration from account.each"
-      puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       if account.name == record.from 
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-        puts "started an if statement investigation -- first if statement"
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
         case account.accounttype
         when "Asset"
           if account.amount > 0 && account.amount >= record.amount
@@ -58,9 +52,6 @@ class TransactionValidator < ActiveModel::Validator
           record.errors[:from] << "The FROM record can't be of type EXPENSE"
         end
       elsif account.name == record.to && account.name != record.from
-        puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-        puts "entered into the elsif statemetns"
-        puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         case account.accounttype
         when "Assets"
           @sumassets = @sumassets + record.amount
@@ -83,14 +74,6 @@ class TransactionValidator < ActiveModel::Validator
     end
     
     #Applying the formula to check it transaction is valid or not
-    puts "************************************************"
-    puts "just before the last if statement"
-    puts "the values of summations are as follows"
-    puts @sumassets
-    puts @sumliability
-    puts @sumequity
-    puts @sumexpense
-    puts "***********************************************"
     if @sumassets - @sumliability - @sumequity + @sumexpense != 0.0
       record.errors.add(:base, "This is not a valid transaction")
     #record.errors = "This is not a valid transaction"
