@@ -5,6 +5,11 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+# Cash (Asset) = 250,000
+# Bank (Asset) = 0
+# Equipment (Asset) = 0
+# Capital (Equity) = 250,000
+# Office Expenses (Expense) = 0
 @nuaccounts = [{:name => "Cash", :amount => 250000, :accounttype => "Asset"}, {:name => "Bank", :amount => 0.0, :accounttype => "Asset"}, {:name => "Equipment", :amount => 0.0, :accounttype => "Asset"}, {:name => "Capital", :amount => 250000, :accounttype => "Equity"}, {:name => "Office Expenses", :amount => 0.0, :accounttype => "Expense"}]
 @nuaccounts.each do |x|
   Account.create(x)
