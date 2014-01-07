@@ -3,7 +3,7 @@ class CreateAccounts < ActiveRecord::Migration
     create_table :accounts do |t|
       t.string :name
       t.float :amount
-      t.string :accounttype
+      t.belongs_to :accounttype
 
       t.timestamps
     end

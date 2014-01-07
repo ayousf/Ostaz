@@ -1,8 +1,8 @@
 class CreateTransactions < ActiveRecord::Migration
   def change
     create_table :transactions do |t|
-      t.string :from
-      t.string :to
+      t.belongs_to :accounts
+      t.belongs_to :accounts
       t.float :amount
 
       t.timestamps
