@@ -51,9 +51,12 @@ class TransactionValidator < ActiveModel::Validator
         when "Expense"
           record.errors[:from] << "The FROM record can't be of type EXPENSE"
         end
-      elsif account.name == record.to && account.name != record.from
+      end
+      end
+      @accounts.each do |account|
+      if account.name == record.to && account.name != record.from
         case account.accounttype
-        when "Assets"
+        when "Asset"
           @sumassets = @sumassets + record.amount
           #account.amount = account.amount + record.amount
           #account.save
