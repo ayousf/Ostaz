@@ -31,6 +31,10 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(transaction_params)
     respond_to do |format|
       if @transaction.valid? #&& @transaction.errors.empty? == false
+        @transaction.from_account.amount = @transaction.from_account.amount - @transaction.amount
+        @transaction.from_account.amount.save
+        @transaction.to_account.amount = @transaction.to_account.amount + @transaction.amount
+        @transaction.to_account.amount.save
         @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
         format.json { render action: 'show', status: :created, location: @transaction }

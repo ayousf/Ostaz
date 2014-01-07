@@ -28,17 +28,11 @@ ActiveRecord::Schema.define(version: 20131231121334) do
   end
 
   create_table "transactions", force: true do |t|
-    t.string   "from"
-    t.string   "to"
-    t.integer  "accounts_id"
+    t.integer  "from_account_id"
+    t.integer  "to_account_id"
     t.float    "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "transactions_accounts", id: false, force: true do |t|
-    t.integer "account_id"
-    t.integer "transaction_id"
   end
 
 end

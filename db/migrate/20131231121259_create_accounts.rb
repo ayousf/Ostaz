@@ -4,7 +4,7 @@ class CreateAccounts < ActiveRecord::Migration
       t.string :name
       t.float :amount
       t.belongs_to :accounttype
-      t.references :transaction
+      
 
       t.timestamps
     end

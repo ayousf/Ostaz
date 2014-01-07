@@ -20,85 +20,49 @@ class TransactionValidator < ActiveModel::Validator
         @sumexpense = account.amount + @sumexpense
       end
     end
-    # calculating the SUMs based on the information in the record
-    @accounts.each do |account|
-      if account.name == record.from 
-        case account.accounttype
-        when "Asset"
-          if account.amount > 0 && account.amount >= record.amount
-            @sumassets = @sumassets - record.amount
-          #account.amount = account.amount - record.amount
-          #account.save
-          else
-            record.errors[:from] << "#{record.from} doesn't have enough money to complete this transaction"
-          end
-        when "Equity"
-          if account.amount > 0 && account.amount >= record.amount
-            @sumequity = @sumequity - record.amount
-          #account.amount = account.amount - record.amount
-          #account.save
-          else
-            record.errors[:from] << "#{record.from} doesn't have enough money to complete this transaction"
-          end
-        when "Liability"
-          if account.amount > 0 && account.amount >= record.amount
-            @sumliability = @sumliability - record.amount
-          #account.amount = account.amount - record.amount
-          #account.save
-          else
-            record.errors[:from] << "#{record.from} doesn't have enough money to complete this transaction"
-          end
-        when "Expense"
-          record.errors[:from] << "The FROM record can't be of type EXPENSE"
-        end
+    ######################################################################3
+    # I want to check if the from account has the provided amount & it's not the same account as the To & the amount is not zero
+    if record.from_account.amount >= record.amount.to_f && record.from_account.accounttype_id != record.to_account.accounttype_id && record.amount.to_f > 0
+      # Adjusting the SUM based on the From field
+      case record.from_account.accounttype_id
+      when 1
+        @sumassets = @sumassets - record.amount
+      when 2
+        @sumequity = @sumequity - record.amount
+      when 3
+        @sumliability = @sumliability + record.amount
+      when 4
+        record.errors[:from] << "Expenses can't be used to pay to other entities"
       end
+      # Adjusting teh SUM based on the To field
+      case record.to_account.accounttype_id
+      when 1
+        @sumassets = @sumassets + record.amount
+      when 2
+        @sumequity = @sumequity + record.amount
+      when 3
+        @sumliability = @sumliability - record.amount
+      when 4
+        @sumexpense = @sumexpense + record.amount
       end
-      @accounts.each do |account|
-      if account.name == record.to && account.name != record.from
-        case account.accounttype
-        when "Asset"
-          @sumassets = @sumassets + record.amount
-          #account.amount = account.amount + record.amount
-          #account.save
-        when "Equity"
-          @sumequity = @sumequity + record.amount
-          #account.amount = account.amount + record.amount
-          #account.save
-        when "Liability"
-          @sumliability = @sumliability + record.amount
-          #account.amount = account.amount + record.amount
-          #account.save
-        when "Expense"
-          @sumexpense = @sumexpense + record.amount
-          #account.amount = account.amount + record.amount
-          #account.save
-        end
-      end
-    end
-    
-    #Applying the formula to check it transaction is valid or not
-    if @sumassets - @sumliability - @sumequity + @sumexpense != 0.0
-      record.errors.add(:base, "This is not a valid transaction")
-    #record.errors = "This is not a valid transaction"
     else
-     @accounts.each do |account|
-       if account.name == record.from
-         account.amount = account.amount - record.amount
-         account.save
-       elsif account.name == record.to
-         account.amount = account.amount + record.amount
-         account.save
-       end
-     end
+      record.errors[:base] << "Error completing this transaction"
+    end
+
+    # Checking the accounting equation
+    if record.errors.empty? && @sumassets - @sumliability - @sumequity + sumexpense == 0
+      return true
+    else
+      record.errors[:base] << "This transactions is not sound accounting"
     end
   end
 end
 
-class Transaction < ActiveRecord::Base
-  include ActiveModel::Validations
-  belongs_to :from_account, :class_name => 'Account'
-  belongs_to :to_account, :class_name => 'Account'
-  has_many :Accounts
-  validates :from, :to, :amount, presence: true
-  validates_with TransactionValidator
-end
+  class Transaction < ActiveRecord::Base
+    include ActiveModel::Validations
+    belongs_to :from_account, :class_name => 'Account'
+    belongs_to :to_account, :class_name => 'Account'
+    has_many :Accounts
+    validates :from, :to, :amount, presence: true
+    validates_with TransactionValidator
+  end
