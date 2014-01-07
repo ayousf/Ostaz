@@ -25,24 +25,24 @@ class TransactionValidator < ActiveModel::Validator
       if account.name == record.from 
         case account.accounttype
         when "Asset"
-          if account.amount > 0 && account.amount >= record.amount
-            @sumassets = @sumassets - record.amount
+          if account.amount > 0 && account.amount >= record.amount.to_f
+            @sumassets = @sumassets - record.amount.to_f
           #account.amount = account.amount - record.amount
           #account.save
           else
             record.errors[:from] << "#{record.from} doesn't have enough money to complete this transaction"
           end
         when "Equity"
-          if account.amount > 0 && account.amount >= record.amount
-            @sumequity = @sumequity - record.amount
+          if account.amount > 0 && account.amount >= record.amount.to_f
+            @sumequity = @sumequity - record.amount.to_f
           #account.amount = account.amount - record.amount
           #account.save
           else
             record.errors[:from] << "#{record.from} doesn't have enough money to complete this transaction"
           end
         when "Liability"
-          if account.amount > 0 && account.amount >= record.amount
-            @sumliability = @sumliability - record.amount
+          if account.amount > 0 && account.amount >= record.amount.to_f
+            @sumliability = @sumliability - record.amount.to_f
           #account.amount = account.amount - record.amount
           #account.save
           else
@@ -54,19 +54,19 @@ class TransactionValidator < ActiveModel::Validator
       elsif account.name == record.to && account.name != record.from
         case account.accounttype
         when "Assets"
-          @sumassets = @sumassets + record.amount
+          @sumassets = @sumassets + record.amount.to_f
           #account.amount = account.amount + record.amount
           #account.save
         when "Equity"
-          @sumequity = @sumequity + record.amount
+          @sumequity = @sumequity + record.amount.to_f
           #account.amount = account.amount + record.amount
           #account.save
         when "Liability"
-          @sumliability = @sumliability + record.amount
+          @sumliability = @sumliability + record.amount.to_f
           #account.amount = account.amount + record.amount
           #account.save
         when "Expense"
-          @sumexpense = @sumexpense + record.amount
+          @sumexpense = @sumexpense + record.amount.to_f
           #account.amount = account.amount + record.amount
           #account.save
         end
@@ -80,10 +80,10 @@ class TransactionValidator < ActiveModel::Validator
     else
      @accounts.each do |account|
        if account.name == record.from
-         account.amount = account.amount - record.amount
+         account.amount = account.amount - record.amount.to_f
          account.save
        elsif account.name == record.to
-         account.amount = account.amount + record.amount
+         account.amount = account.amount + record.amount.to_f
          account.save
        end
      end
