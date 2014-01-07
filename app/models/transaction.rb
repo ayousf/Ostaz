@@ -96,7 +96,9 @@ end
 
 class Transaction < ActiveRecord::Base
   include ActiveModel::Validations
-  has_and_belongs_to_many :accounts
+  belongs_to :from_account, :class_name => 'Account'
+  belongs_to :to_account, :class_name => 'Account'
+  has_many :Accounts
   validates :from, :to, :amount, presence: true
   validates_with TransactionValidator
 end
