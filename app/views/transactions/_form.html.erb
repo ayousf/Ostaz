@@ -1,31 +1,30 @@
 <%= form_for(@transaction) do |f| %>
-  <% if @transaction.errors.empty? == false%>
-  <% puts "WE HAVE ENTERED INTO THE TRUE CASE OF HTTP ERROR" %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+<% if @transaction.errors.empty? == false%>
+<div id="error_explanation">
+  <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
 
-      <ul>
-      <% @transaction.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <ul>
+    <% @transaction.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
 
-  <div class="field">
-    <%= f.label :from_account_id %><%= f.select :from_account_id, @accounts.map{|x| x.id.to_s+" - "+x.name} %><br>
-    
-  </div>
-  <div class="field">
-    <%= f.label :to_account_id %><%= f.select :to_account_id, @accounts.map{|x| x.id.to_s+" - "+x.name} %><br>
-    
-  </div>
-  <div class="field">
-    <%= f.label :amount %><br>
-    <%= f.text_field :amount %>
-  </div>
-  <div class="actions">
-  	
-    <%= f.submit %>
-  </div>
+<div class="field">
+  <%= f.label :from_account_id %><%= f.select :from_account_id, @accounts.map{|x| x.id.to_s+" - "+x.name} %><br>
+
+</div>
+<div class="field">
+  <%= f.label :to_account_id %><%= f.select :to_account_id, @accounts.map{|x| x.id.to_s+" - "+x.name} %><br>
+
+</div>
+<div class="field">
+  <%= f.label :amount %><br>
+  <%= f.text_field :amount %>
+</div>
+<div class="actions">
+
+  <%= f.submit %>
+</div>
 <% end %>

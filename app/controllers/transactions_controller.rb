@@ -26,6 +26,8 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/1/edit
   def edit
+    @transaction = Transaction.find(params[:id])
+    @accounts = Account.all
   end
 
   # POST /transactions
@@ -34,6 +36,7 @@ class TransactionsController < ApplicationController
     @account = Account.new
     @accounts = Account.all
     @transaction = Transaction.new()
+    @transaction.id = params[:transaction][:id]
     @transaction.from_account_id = params[:transaction][:from_account_id][0].to_i
     @transaction.to_account_id = params[:transaction][:to_account_id][0].to_i
     @transaction.amount = params[:transaction][:amount]
@@ -56,6 +59,10 @@ class TransactionsController < ApplicationController
   # PATCH/PUT /transactions/1
   # PATCH/PUT /transactions/1.json
   def update
+    @transaction = Transaction.find(params[:id])
+    @transaction.from_account_id = params[:transaction][:from_account_id][0].to_i
+    @transaction.to_account_id = params[:transaction][:to_account_id][0].to_i
+    @transaction.amount = params[:transaction][:amount]
     respond_to do |format|
       if @transaction.update(transaction_params)
         format.html { redirect_to @transaction, notice: 'Transaction was successfully updated.' }
