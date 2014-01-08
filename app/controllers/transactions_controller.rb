@@ -80,13 +80,17 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params[:id])
     unless @transaction.from_account_id == 3 || @transaction.from_account_id == 4
       @transaction.from_account.amount = @transaction.from_account.amount + @transaction.amount
+      @transaction.from_account.save
     else
       @transaction.from_account.amount = @transaction.from_account.amount - @transaction.amount
+      @transaction.from_account.save
     end
     unless @transaction.to_account_id == 3
       @transaction.to_account.amount = @transaction.to_account.amount - @transaction.amount
+      @transaction.to_account.save
     else
       @transaction.to_account.amount = @transaction.to_account.amount + @transaction.amount
+      @transaction.to_account.save
     end
     @transaction.destroy
     respond_to do |format|

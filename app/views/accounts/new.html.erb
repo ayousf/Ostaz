@@ -1,3 +1,21 @@
 <h1>Kindly provide the new account details</h1>
 <h3>New Account Entry</h3>
+<%= form_for(@account) do |f|%>
+<div class="field">
+  <%= f.label :accounttype_id %><%= f.select :accounttype_id, @accounttype.map{|x| x.id.to_s+" - "+x.name} %><br>
 
+</div>
+<div class="field">
+  <%= f.label :name %><br>
+  <%= f.text_field :name%><br>
+
+</div>
+<div class="field">
+  <%= f.label :amount %><br>
+  <%= f.text_field :amount %>
+</div>
+<div class="actions">
+
+  <%= f.submit %>
+</div>
+<% end %>
