@@ -28,7 +28,10 @@ class TransactionsController < ApplicationController
   def create
     @account = Account.new
     @accounts = Account.all
-    @transaction = Transaction.new(transaction_params)
+    @transaction = Transaction.new()
+    @transaction.from_account_id = params[:transaction][:from_account_id][0].to_i
+    @transaction.to_account_id = params[:transaction][:to_account_id][0].to_i
+    @transaction.amount = params[:transaction][:amount]
     respond_to do |format|
       if @transaction.valid? #&& @transaction.errors.empty? == false
         @transaction.from_account.amount = @transaction.from_account.amount - @transaction.amount
