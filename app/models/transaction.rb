@@ -1,4 +1,4 @@
-class TransactionValidator < ActiveModel::Validator
+  class TransactionValidator < ActiveModel::Validator
   def validate(record)
     @accounts = Account.all
     @accounttypes = AccountType.all

@@ -70,6 +70,17 @@ class TransactionsController < ApplicationController
   # DELETE /transactions/1
   # DELETE /transactions/1.json
   def destroy
+    @transaction = Transaction.find(params[:id])
+    unless @transaction.from_account_id == 3 || @transaction.from_account_id == 4
+      @transaction.from_account.amount = @transaction.from_account.amount + @transaction.amount
+    else
+      @transaction.from_account.amount = @transaction.from_account.amount - @transaction.amount
+    end
+    unless @transaction.to_account_id == 3
+      @transaction.to_account.amount = @transaction.to_account.amount - @transaction.amount
+    else
+      @transaction.to_account.amount = @transaction.to_account.amount + @transaction.amount
+    end
     @transaction.destroy
     respond_to do |format|
       format.html { redirect_to transactions_url }
@@ -87,4 +98,4 @@ class TransactionsController < ApplicationController
     def transaction_params
       params.require(:transaction).permit(:from, :to, :amount)
     end
-end
+  end
