@@ -15,8 +15,8 @@
   <tbody>
     <% @transactions.each do |transaction| %>
       <tr>
-        <td><%= transaction.from_account.name %></td>
-        <td><%= transaction.to_account.name %></td>
+        <td><%= link_to "#{transaction.from_account.name}", account_path(transaction.from_account_id) %></td>
+        <td><%= link_to "#{transaction.to_account.name}", account_path(transaction.to_account_id) %></td>
         <td><%= transaction.amount %></td>
         <td><%= link_to 'Show', transaction %></td>
         <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
@@ -31,3 +31,5 @@
 <%= link_to 'New Transaction', new_transaction_path %>
 <br>
 <%= link_to 'View Accounts', accounts_path%>
+<br>
+

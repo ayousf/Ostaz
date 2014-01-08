@@ -1,2 +1,25 @@
-<h1>Accounts#show</h1>
-<p>Find me in app/views/accounts/show.html.erb</p>
+<h1>Account Detials</h1>
+<h3><%= @account.name %> </h3>
+
+<table>
+<thead>
+<td>From</td>
+<td>To</td>
+<td>Amount</td>
+<td>Created</td>
+</thead>
+<tbody>
+	<% @transaction.each do |transaction| %>
+	<% if transaction.to_account.name == @account.name || transaction.from_account.name == @account.name %>
+	<tr>
+		<td><%= transaction.from_account.name%></td>
+		<td><%= transaction.to_account.name%></td>
+		<td><%= transaction.amount%></td>
+		<td><%= transaction.created_at%></td>
+	</tr>
+	<% end %>
+	<% end %>
+</tbody>
+</table>
+<br>
+<%= link_to 'Back to transactions homepage', transactions_path%>
