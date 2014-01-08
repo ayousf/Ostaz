@@ -10,7 +10,12 @@ class TransactionsController < ApplicationController
   # GET /transactions/1
   # GET /transactions/1.json
   def show
-    @transaction = Transaction.find(params[:id])
+    if params[:id].empty? == false
+      @transaction = Transaction.find(params[:id])
+    else
+      @transaction = Transaction.all
+    end
+    
   end
 
   # GET /transactions/new

@@ -74,5 +74,6 @@ end
     belongs_to :to_account, :class_name => 'Account'
     has_many :Accounts
     validates :amount, presence: true
+    validates :amount, numericality: true
     validates_with TransactionValidator
   end
