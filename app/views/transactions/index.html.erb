@@ -15,8 +15,8 @@
   <tbody>
     <% @transactions.each do |transaction| %>
       <tr>
-        <td><%= transaction.from %></td>
-        <td><%= transaction.to %></td>
+        <td><%= transaction.from_account.name %></td>
+        <td><%= transaction.to_account.name %></td>
         <td><%= transaction.amount %></td>
         <td><%= link_to 'Show', transaction %></td>
         <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
