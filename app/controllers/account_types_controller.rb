@@ -4,7 +4,10 @@ class AccountTypesController < ApplicationController
   end
 
   def show
-  	@accounttype = AccountType.find_by(params[:name])
+  	@accounttype = AccountType.find(params[:id])
+    puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    puts "@accounttype contains the following #{@accounttype.name}"
+    puts "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
   	@accounts = Account.all
   end
 

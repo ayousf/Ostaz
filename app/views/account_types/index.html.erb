@@ -1,6 +1,6 @@
 <h1>AccountTypes Listing</h1>
 <ol>
 	<% @accounttype.each do |type| %>
-	<li><%= link_to "#{type.name}", account_type_path(type.name)  %></li>
+	<li><%= link_to "#{type.name}", account_type_path(type)  %></li>
 	<% end %>
 </ol>

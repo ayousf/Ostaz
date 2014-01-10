@@ -6,7 +6,7 @@
 </thead>
 <tbody>
 <% @accounts.each do |account| %>
-<% if account.accounttype_id == @accounttype.id %>
+<% if account.account_type.name == @accounttype.name %>
 <tr>	
 	<td><%= link_to "#{account.name}", account_path(account) %></td>
 	<td><%= account.amount %></td> 

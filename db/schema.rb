@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20131231121334) do
   create_table "accounts", force: true do |t|
     t.string   "name"
     t.float    "amount"
-    t.integer  "accounttype_id"
+    t.integer  "account_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
