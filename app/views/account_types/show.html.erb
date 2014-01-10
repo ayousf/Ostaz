@@ -1,2 +1,17 @@
-<h1>AccountTypes#show</h1>
-<p>Find me in app/views/account_types/show.html.erb</p>
+<h1>Account Type Details</h1>
+<table>
+<thead>
+	<td> Account Title </td>
+	<td> Amount </td>
+</thead>
+<tbody>
+<% @accounts.each do |account| %>
+<% if account.accounttype_id == @accounttype.id %>
+<tr>	
+	<td><%= link_to "#{account.name}", account_path(account) %></td>
+	<td><%= account.amount %></td> 
+</tr>
+<% end %>
+<% end %>
+</tbody>
+</table>
