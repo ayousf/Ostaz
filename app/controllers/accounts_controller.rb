@@ -16,7 +16,7 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new()
     @account.name = params[:account][:name]
-    @account.accounttype_id = params[:account][:accounttype_id][0].to_i
+    @account.account_type_id = params[:account][:account_type_id][0].to_i
     #@account.id = params[:account][:id]
     @account.amount = params[:account][:amount]
     respond_to do |format|

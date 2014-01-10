@@ -1,2 +1,22 @@
-<h1>AccountTypes#new</h1>
-<p>Find me in app/views/account_types/new.html.erb</p>
+<h1>Creating a new Account Type</h1>
+<h3> Please enter the name of the new Account Type you would like to add </h3>
+<%= form_for(@accounttype) do |f| %>
+<% if @accounttype.errors.empty? == false%>
+<div id="error_explanation">
+  <h2><%= pluralize(@accounttype.errors.count, "error") %> prohibited this account type from being saved:</h2>
+
+  <ul>
+    <% @accounttype.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+<div class="field">
+  <%= f.label :name %>
+  <%= f.text_field :name%>
+  <%= f.submit %>
+
+
+<% end %>
+
