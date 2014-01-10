@@ -6,6 +6,8 @@
     @sumequity = 0.0
     @sumliability = 0.0
     @sumexpense = 0.0
+    #####################################################################################
+    #####################################################################################
     #calcualting the SUMs without the record
     #This so that we can add the value of the record From and To to it
     @accounts.each do |account|
@@ -20,8 +22,10 @@
         @sumexpense = account.amount + @sumexpense
       end
     end
-    ######################################################################3
-    # I want to check if the from account has the provided amount & it's not the same account as the To & the amount is not zero
+    #######################################################################################
+    ######################################################################################3
+    # I want to check if the from account has the provided amount & it's not the same account
+    # as the To & the amount is not zero
     if record.from_account.amount >= record.amount.to_f && record.from_account != record.to_account && record.amount.to_f > 0
       # Adjusting the SUM based on the From field
       case record.from_account.accounttype_id
@@ -35,8 +39,11 @@
         record.errors[:from_account_id] << "Expenses can't be used to pay to other entities"
       end
     else
-      record.errors[:from_account_id] << "Error in the From field or the Amount Field"
+      record.errors[:from_account_id] << "Error: Please choose a different account"
     end
+    
+    ########################################################################################
+    ########################################################################################
     # Adjusting teh SUM based on the To field
     
     if record.errors[:from_account_id].empty? == true
@@ -51,7 +58,8 @@
         @sumexpense = @sumexpense + record.amount
       end
     end
-
+    #######################################################################################
+    #######################################################################################
     # Checking the accounting equation
     puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
     puts "summations are as follows"
@@ -65,6 +73,8 @@
     else
       record.errors[:base] << "This transactions is not sound accounting"
     end
+    ###########################################################################################
+    ###########################################################################################
   end
 end
 
