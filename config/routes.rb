@@ -4,6 +4,7 @@ OstazIii::Application.routes.draw do
   resources :transactions
   resources :accounts
   resources :account_types
+  get 'accounts/account_history', to: 'accounts#history', :as => :account_history
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

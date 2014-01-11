@@ -1,0 +1,23 @@
+<h1> <%= #{@account.name} %> History </h1>
+<table>
+<thead>
+<td> From  </td>
+<td> To    </td>
+<td> Amount</td>
+<td> Date  </td>
+</thead>
+
+<tbody>
+<% @account_history.each do |account| %>
+<tr>
+<td><%=account.from_account%></td>
+<td><%=account.to_account%></td>
+<td><%=account.amount%></td>
+<td><%=account.created_at%></td>
+</tr>
+<%end%>
+</tbody>
+
+</table>
+
+

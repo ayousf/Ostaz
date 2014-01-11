@@ -42,4 +42,16 @@ class AccountsController < ApplicationController
     end
   end
 
+  def history
+    @account = Account.find(params[:id])
+    @account_history = Array()
+    @transaction = Transaction.all
+    @transaction.each do |transaction|
+      if transaction.from_account.name == @account.name || transaction.to_account.name == @account.name
+        @account_history << transaction
+      end
+    end
+  end
+
+
 end
