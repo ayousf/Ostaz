@@ -26,4 +26,24 @@ class AccountTypesController < ApplicationController
   def new
     @accounttype = AccountType.new()
   end
+
+  def destroy
+    @found = false
+    @accounttype = AccountType.find(params[:id])
+    @accounts = Account.all
+    @accounts.each do |account|
+      if account.account_type_id == @accounttype.id
+        @found = true
+      end
+    end
+    if @found == false
+      @accounttype.destroy
+      respond_to do |format|
+        
+        format.html{ redirect_to account_types_url}    
+        format.json{ head :no_content}
+      end
+    end
+  end
+
 end

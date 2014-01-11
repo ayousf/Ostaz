@@ -30,4 +30,16 @@ class AccountsController < ApplicationController
       end
     end
   end
+
+  def destroy
+    @account = Account.find(params[:id])
+    if @account.amount == 0
+      @account.destroy
+      respond_to do |format|
+        format.html {redirect_to accounts_path}
+        format.json {head :no_content}
+      end
+    end
+  end
+
 end

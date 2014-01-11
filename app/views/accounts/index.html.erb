@@ -3,17 +3,19 @@
 <table>
 	<thead>
 		<th> Account Name </th>
-			<th> Account Amount </th>
-		</thead>
-		<tbody>
+		<th> Amount </th>
+		<th></th>
+	</thead>
+	<tbody>
 		<tr>
 			<% @accounts_native.each do |a| %>
 			<td> <%= a.name %> </td>
 			<td> <%= a.amount %></td>
+			<td><%= link_to 'Destroy', a, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 		</tr>
-		</tbody>
-		<% end %>
-		</table>
+	</tbody>
+	<% end %>
+</table>
 <br>
 <%= link_to 'Back to transactions homepage', transactions_path%>
 <br>

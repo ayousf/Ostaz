@@ -11,7 +11,7 @@
     #calcualting the SUMs without the record
     #This so that we can add the value of the record From and To to it
     @accounts.each do |account|
-      case account.accounttype_id
+      case account.account_type_id
       when 1
         @sumassets = account.amount + @sumassets
       when 2
@@ -28,7 +28,7 @@
     # as the To & the amount is not zero
     if record.from_account.amount >= record.amount.to_f && record.from_account != record.to_account && record.amount.to_f > 0
       # Adjusting the SUM based on the From field
-      case record.from_account.accounttype_id
+      case record.from_account.account_type_id
       when 1
         @sumassets = @sumassets - record.amount
       when 2
@@ -47,7 +47,7 @@
     # Adjusting teh SUM based on the To field
     
     if record.errors[:from_account_id].empty? == true
-      case record.to_account.accounttype_id
+      case record.to_account.account_type_id
       when 1
         @sumassets = @sumassets + record.amount
       when 2

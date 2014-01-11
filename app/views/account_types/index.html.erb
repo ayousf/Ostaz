@@ -1,6 +1,17 @@
 <h1>AccountTypes Listing</h1>
-<ol>
+<table>
+<thead>
+	<td>Account Name</td>
+	<td></td>
+
+</thead>
+<tbody>
 	<% @accounttype.each do |type| %>
-	<li><%= link_to "#{type.name}", account_type_path(type)  %></li>
+	<tr>
+		<td><%= link_to "#{type.name}", account_type_path(type)  %></td>
+		<td><%= link_to 'Destroy', type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	</tr>
 	<% end %>
-</ol>
+</tbody>
+</table>
+
