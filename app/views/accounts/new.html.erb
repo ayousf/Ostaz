@@ -2,7 +2,7 @@
 <h3>New Account Entry</h3>
 <%= form_for(@account) do |f|%>
 <div class="field">
-  <%= f.label :account_type_id %><%= f.select :account_	type_id, @accounttype.map{|x| x.id.to_s+" - "+x.name} %><br>
+  <%= f.label :account_type_id %><%= f.select :account_type_id, @accounttype.map{|x| x.id.to_s+" - "+x.name} %><br>
 
 </div>
 <div class="field">

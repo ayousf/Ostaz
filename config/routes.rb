@@ -1,5 +1,6 @@
 OstazIii::Application.routes.draw do
   
+  devise_for :users
   root 'transactions#index'
   resources :transactions
   resources :accounts

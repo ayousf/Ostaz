@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>OstazIii</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
+	<title>Ostaz Platform</title>
+	<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+	<%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+	<div id = user_nav>
+		<% if user_signed_in? %>
+		<p> Signed in as <%= current_user.email %>. Not you? </p>
+		<%= link_to "Sign Out", destroy_user_session_path %>
+		<% else  %>
+		<%= link_to "Sign Up", new_user_registration_path %> or <%= link_to "Sign in", new_user_session_path %>
+		<% end %>
+	</div>
+	<%= yield %>
 
 </body>
 </html>
