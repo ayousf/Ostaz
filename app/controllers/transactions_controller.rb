@@ -1,6 +1,7 @@
   class TransactionsController < ApplicationController
   #before_action :set_transaction, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authenticate_user!
+  load_and_authorize_resource
   # GET /transactions
   # GET /transactions.json
   def index

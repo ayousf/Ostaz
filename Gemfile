@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# use cancan for authorization
+gem 'cancan', '~> 1.6.10'
+
 # use devise for authentication
 gem 'devise', '~> 3.2.2'
 
