@@ -31,13 +31,18 @@
 </table>
 
 <br>
-
+<% if can? :create, Transaction %>
 <%= link_to 'New Transaction', new_transaction_path %>
+<% end %>
 <br>
 <%= link_to 'View Accounts', accounts_path%>
 <br>
+<% if can? :create, Account %>
 <%= link_to 'Add new Accounts', new_account_path%>
+<% end %>
 <br>
 <%= link_to 'View Existing Account Types', account_types_path%>
 <br>
+<% if can? :create, AccountType %>
 <%= link_to 'Create a new Account Type', new_account_type_path%>
+<% end %>
