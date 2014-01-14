@@ -1,5 +1,16 @@
 source 'https://rubygems.org'
 
+#added simplecov to test the amount of software code being tested
+#gem 'simplecov', :require => false, :group => :test
+
+# Adding cucumber and capybara in a test group
+group :test do
+	gem "cucumber-rails"
+	gem "capybara"
+	gem "database_cleaner"
+	gem 'simplecov'
+end
+
 # use cancan for authorization
 gem 'cancan', '~> 1.6.10'
 
